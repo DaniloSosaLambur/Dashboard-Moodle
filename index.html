@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard oficial de actividad Moodle</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#687087;--primary:#123c78;--accent:#d6a73a;--border:#dfe5ef}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:linear-gradient(135deg,#0d2c59,#174f96);color:white;padding:28px 5vw;border-bottom:5px solid var(--accent)}
+header h1{margin:0 0 6px;font-size:clamp(24px,4vw,38px)} header p{margin:0;opacity:.9}
+main{width:min(1450px,94%);margin:24px auto 50px}.toolbar,.card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 8px 24px rgba(20,40,80,.07)}
+.toolbar{padding:16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center}.toolbar input,.toolbar select,.toolbar button{padding:11px 13px;border:1px solid var(--border);border-radius:9px;background:white}
+.toolbar button{cursor:pointer;background:var(--primary);color:white;border:none;font-weight:700}.toolbar .secondary{background:#5b6578}
+.notice{padding:14px;margin-top:14px;border-left:5px solid var(--accent);background:#fff8e8;border-radius:10px;color:#5d4a19}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}.kpi{padding:19px}.kpi small{color:var(--muted);font-weight:700;text-transform:uppercase}.kpi strong{display:block;font-size:31px;margin-top:8px}.kpi span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{padding:18px}.card h2{font-size:18px;margin:0 0 14px}.chart-wrap{height:340px}
+.table-card{margin-top:16px;overflow:auto}.table-card table{width:100%;border-collapse:collapse;min-width:760px}.table-card th,.table-card td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:14px}.table-card th{background:#eef3fa;position:sticky;top:0}.muted{color:var(--muted)}
+footer{text-align:center;color:var(--muted);padding:22px}.empty{text-align:center;padding:45px;color:var(--muted)}
+@media(max-width:900px){.kpis{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}}@media(max-width:520px){.kpis{grid-template-columns:1fr}}
+@media print{.toolbar,.notice{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}main{width:100%;margin:10px}.chart-wrap{height:280px}header{padding:18px}.table-card{max-height:none;overflow:visible}}
+</style>
+</head>
+<body>
+<header><h1>Informe de actividad Moodle</h1><p id="subtitle">Ciencias Naturales – 7.º grado | Dashboard institucional</p></header>
+<main>
+<section class="toolbar">
+<label><strong>Cargar JSON:</strong> <input id="fileInput" type="file" accept="application/json,.json"></label>
+<select id="eventFilter"><option value="">Todos los eventos</option></select>
+<select id="componentFilter"><option value="">Todos los componentes</option></select>
+<button id="printBtn">Imprimir / Guardar PDF</button><button id="resetBtn" class="secondary">Restablecer filtros</button>
+</section>
+<div class="notice">El archivo se procesa localmente en el navegador. Las direcciones IP no se muestran en el informe.</div>
+<section class="kpis">
+<div class="card kpi"><small>Registros</small><strong id="kpiRecords">0</strong><span>Eventos registrados</span></div>
+<div class="card kpi"><small>Usuarios</small><strong id="kpiUsers">0</strong><span>Usuarios únicos</span></div>
+<div class="card kpi"><small>Componentes</small><strong id="kpiComponents">0</strong><span>Tipos de recurso</span></div>
+<div class="card kpi"><small>Días activos</small><strong id="kpiDays">0</strong><span>Fechas con actividad</span></div>
+</section>
+<section class="grid">
+<div class="card"><h2>Eventos más frecuentes</h2><div class="chart-wrap"><canvas id="eventsChart"></canvas></div></div>
+<div class="card"><h2>Actividad por componente</h2><div class="chart-wrap"><canvas id="componentsChart"></canvas></div></div>
+<div class="card"><h2>Actividad por fecha</h2><div class="chart-wrap"><canvas id="datesChart"></canvas></div></div>
+<div class="card"><h2>Usuarios con mayor actividad</h2><div class="chart-wrap"><canvas id="usersChart"></canvas></div></div>
+</section>
+<section class="card table-card"><h2>Resumen por usuario</h2><table><thead><tr><th>Usuario</th><th>Total de eventos</th><th>Componentes usados</th><th>Última actividad</th></tr></thead><tbody id="userTable"><tr><td colspan="4" class="empty">Carga un archivo JSON para generar el informe.</td></tr></tbody></table></section>
+</main><footer>Dashboard institucional generado a partir de registros exportados de Moodle.</footer>
+<script>
+let rawData=[], charts={};
+const $=id=>document.getElementById(id); const normalize=d=>Array.isArray(d)&&d.length===1&&Array.isArray(d[0])?d[0]:d;
+function parseDate(s){const [date,time='00:00:00']=(s||'').split(', ');const [dd,mm,yy]=date.split('/').map(Number);return new Date(2000+yy,mm-1,dd,...time.split(':').map(Number));}
+function countBy(arr,key){return arr.reduce((a,x)=>{const v=x[key]||'Sin especificar';a[v]=(a[v]||0)+1;return a;},{});} function top(obj,n=10){return Object.entries(obj).sort((a,b)=>b[1]-a[1]).slice(0,n)}
+function fillSelect(id,values){const s=$(id),current=s.value;s.innerHTML='<option value="">Todos</option>'+[...new Set(values.filter(Boolean))].sort().map(v=>`<option>${v}</option>`).join('');s.value=current;}
+function chart(id,type,labels,data,label){if(charts[id]) charts[id].destroy(); charts[id]=new Chart($(id),{type,data:{labels,datasets:[{label,data,borderWidth:2,fill:type==='line'}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:type==='bar'?'y':'x',plugins:{legend:{display:type==='line'}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});}
+function render(){const ef=$('eventFilter').value,cf=$('componentFilter').value;const data=rawData.filter(x=>(!ef||x.nombreevento===ef)&&(!cf||x.componente===cf));
+$('kpiRecords').textContent=data.length.toLocaleString('es-HN');$('kpiUsers').textContent=new Set(data.map(x=>x.nombrecompletodelusuario).filter(Boolean)).size;$('kpiComponents').textContent=new Set(data.map(x=>x.componente).filter(Boolean)).size;$('kpiDays').textContent=new Set(data.map(x=>(x.hora||'').split(',')[0])).size;
+let e=top(countBy(data,'nombreevento'));chart('eventsChart','bar',e.map(x=>x[0]),e.map(x=>x[1]),'Eventos');let c=top(countBy(data,'componente'));chart('componentsChart','doughnut',c.map(x=>x[0]),c.map(x=>x[1]),'Registros');
+let dates={};data.forEach(x=>{let d=(x.hora||'').split(',')[0]||'Sin fecha';dates[d]=(dates[d]||0)+1});let ds=Object.entries(dates).sort((a,b)=>parseDate(a[0])-parseDate(b[0]));chart('datesChart','line',ds.map(x=>x[0]),ds.map(x=>x[1]),'Actividad');let u=top(countBy(data,'nombrecompletodelusuario'));chart('usersChart','bar',u.map(x=>x[0]),u.map(x=>x[1]),'Eventos');
+const grouped={};data.forEach(x=>{let n=x.nombrecompletodelusuario||'Sin identificar';if(!grouped[n])grouped[n]={total:0,components:new Set(),last:null};grouped[n].total++;if(x.componente)grouped[n].components.add(x.componente);let d=parseDate(x.hora);if(!grouped[n].last||d>grouped[n].last)grouped[n].last=d;});$('userTable').innerHTML=Object.entries(grouped).sort((a,b)=>b[1].total-a[1].total).map(([n,v])=>`<tr><td>${n}</td><td>${v.total}</td><td>${[...v.components].join(', ')}</td><td>${v.last?v.last.toLocaleString('es-HN'):'-'}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">No hay datos para estos filtros.</td></tr>';
+}
+$('fileInput').addEventListener('change',async e=>{try{const text=await e.target.files[0].text();const parsed=normalize(JSON.parse(text));if(!Array.isArray(parsed))throw new Error('El JSON debe contener una lista de registros.');rawData=parsed;fillSelect('eventFilter',rawData.map(x=>x.nombreevento));fillSelect('componentFilter',rawData.map(x=>x.componente));render();}catch(err){alert('No se pudo leer el archivo: '+err.message)}});
+$('eventFilter').onchange=render;$('componentFilter').onchange=render;$('printBtn').onclick=()=>window.print();$('resetBtn').onclick=()=>{$('eventFilter').value='';$('componentFilter').value='';render()};
+</script></body></html>
