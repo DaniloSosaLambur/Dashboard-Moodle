@@ -147,6 +147,10 @@
             grid-column: span 4;
         }
 
+        .center-load-field,
+        .month-load-field,
+        .center-field,
+        .month-field,
         .subject-field,
         .event-field,
         .component-field {
@@ -522,6 +526,170 @@
             background: #ffffff;
         }
 
+        /* CARGA DE INFORMACIÓN Y FILTROS */
+
+        .section-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        .section-card.upload-card {
+            border-top: 5px solid var(--accent);
+            background: linear-gradient(135deg, #ffffff 0%, var(--soft-green) 100%);
+        }
+
+        .section-card.filter-card {
+            border-top: 5px solid var(--primary);
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .section-heading h2 {
+            margin: 0 0 4px;
+            color: var(--primary-dark);
+            font-size: 19px;
+        }
+
+        .section-heading p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .upload-grid, .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 12px;
+            align-items: end;
+        }
+
+        .upload-grid .center-load-field { grid-column: span 3; }
+        .upload-grid .month-load-field { grid-column: span 2; }
+        .upload-grid .file-field { grid-column: span 7; }
+        .filter-grid .field { grid-column: span 2; }
+        .filter-grid .date-field { grid-column: span 2; }
+        .filter-grid .toolbar-actions { grid-column: span 12; }
+
+        /* CALENDARIO DE ACTIVIDAD */
+
+        .activity-calendar {
+            display: grid;
+            gap: 18px;
+            min-height: 280px;
+        }
+
+        .calendar-month {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            background: #fff;
+        }
+
+        .calendar-month-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .calendar-month-header h3 {
+            margin: 0;
+            color: var(--primary-dark);
+            text-transform: capitalize;
+            font-size: 17px;
+        }
+
+        .calendar-month-total {
+            background: var(--soft-blue);
+            color: var(--primary-dark);
+            border-radius: 999px;
+            padding: 5px 10px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            padding: 4px 0;
+        }
+
+        .calendar-day {
+            min-height: 74px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #f7f9fb;
+            padding: 7px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 4px;
+        }
+
+        .calendar-day.empty-day {
+            visibility: hidden;
+        }
+
+        .calendar-day.has-activity {
+            border-color: rgba(0, 113, 188, .35);
+        }
+
+        .calendar-day.level-1 { background: #eaf4fb; }
+        .calendar-day.level-2 { background: #cfe8f7; }
+        .calendar-day.level-3 { background: #8fc9eb; }
+        .calendar-day.level-4 { background: #0071bc; color: #fff; }
+
+        .calendar-day-number {
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .calendar-day-count {
+            font-size: 11px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .calendar-day.level-4 .calendar-day-count { color: #fff; }
+
+        .calendar-legend {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .legend-box {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 1px solid var(--border);
+        }
+
         /* DISEÑO RESPONSIVO */
 
         @media (max-width: 1100px) {
@@ -529,10 +697,20 @@
                 grid-template-columns: repeat(6, 1fr);
             }
 
+            .upload-grid, .filter-grid { grid-template-columns: repeat(6, 1fr); }
+            .upload-grid .center-load-field, .upload-grid .month-load-field { grid-column: span 3; }
+            .upload-grid .file-field { grid-column: span 6; }
+            .filter-grid .field, .filter-grid .date-field { grid-column: span 2; }
+            .filter-grid .toolbar-actions { grid-column: span 6; }
+
             .file-field {
                 grid-column: span 6;
             }
 
+            .center-load-field,
+            .month-load-field,
+            .center-field,
+            .month-field,
             .subject-field,
             .event-field,
             .component-field,
@@ -556,6 +734,10 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            .upload-grid, .filter-grid { display: flex; flex-direction: column; align-items: stretch; }
+            .calendar-day { min-height: 62px; padding: 5px; }
+            .calendar-day-count { font-size: 10px; }
 
             .grid {
                 grid-template-columns: 1fr;
@@ -644,37 +826,72 @@
             </div>
         </header>
         <main>
-            <section class="toolbar no-pdf">
-                <div class="field file-field"><label>Adjunta el archivo JSON </label><input id="fileInput" type="file"
-                        accept=".json,application/json" multiple></div>
-                <div class="field subject-field"><label>Asignatura</label><select id="subjectFilter">
-                        <option value="">Todas las asignaturas</option>
-                    </select></div>
-                <div class="field event-field"><label>Evento</label><select id="eventFilter">
-                        <option value="">Todos los eventos</option>
-                    </select></div>
-                <div class="field component-field"><label>Componente</label><select id="componentFilter">
-                        <option value="">Todos los componentes</option>
-                    </select></div>
-                <div class="field period-field"><label>Selecciona el periodo</label><select id="periodFilter">
-                        <option value="all">Todo el periodo</option>
-                        <option value="7">Últimos 7 días</option>
-                        <option value="30">Últimos 30 días</option>
-                        <option value="month">Mes seleccionado</option>
-                        <option value="custom">Fechas personalizadas</option>
-                    </select></div>
-                <div class="field date-field"><label>Desde</label><input id="dateFrom" type="date"></div>
-                <div class="field date-field"><label>Hasta</label><input id="dateTo" type="date"></div>
-                <div class="toolbar-actions"><button id="pdfBtn" type="button">Descargar informe PDF</button><button
-                        id="resetBtn" type="button" class="secondary">Restablecer filtros</button><button id="clearBtn"
-                        type="button" class="danger">Quitar archivos</button></div>
+            <section class="section-card upload-card no-pdf">
+                <div class="section-heading">
+                    <div>
+                        <h2>Registrar nueva información</h2>
+                        <p>Selecciona el centro, el mes y adjunta conjuntamente los archivos JSON de sus asignaturas.</p>
+                    </div>
+                </div>
+                <div class="upload-grid">
+                    <div class="field center-load-field">
+                        <label>Centro educativo</label>
+                        <select id="loadCenter">
+                            <option value="">Selecciona un centro educativo</option>
+                            <option value="CEB Juan J Castro">CEB Juan J Castro</option>
+                            <option value="CEB Luz Osorio Casco">CEB Luz Osorio Casco</option>
+                            <option value="CEB Victor Rubi Zapata">CEB Victor Rubi Zapata</option>
+                            <option value="CEB Wilfredo Campos Poveda">CEB Wilfredo Campos Poveda</option>
+                            <option value="CEB Carlos Roberto Reina">CEB Carlos Roberto Reina</option>
+                            <option value="CEB Gabriela Mistral">CEB Gabriela Mistral</option>
+                            <option value="CEB 12 de Octubre">CEB 12 de Octubre</option>
+                            <option value="CEB David Corea Sanchez">CEB David Corea Sanchez</option>
+                            <option value="CEB Esther Gumper">CEB Esther Gumper</option>
+                            <option value="CEB Ramon Villeda Morales">CEB Ramon Villeda Morales</option>
+                            <option value="CEB 18 de Noviembre">CEB 18 de Noviembre</option>
+                            <option value="CEB Manuel Bonilla">CEB Manuel Bonilla</option>
+                            <option value="CEB Juan Manuel Galvez">CEB Juan Manuel Galvez</option>
+                            <option value="CEB General Francisco Morazán">CEB General Francisco Morazán</option>
+                        </select>
+                    </div>
+                    <div class="field month-load-field">
+                        <label>Mes</label>
+                        <input id="loadMonth" type="month">
+                    </div>
+                    <div class="field file-field">
+                        <label>Adjunta los JSON de las asignaturas</label>
+                        <input id="fileInput" type="file" accept=".json,application/json" multiple>
+                    </div>
+                </div>
             </section>
-            <div id="status" class="status no-pdf">Selecciona conjuntamente los archivos JSON de las ocho asignaturas.
+
+            <section class="section-card filter-card no-pdf">
+                <div class="section-heading">
+                    <div>
+                        <h2>Consultar información registrada</h2>
+                        <p>Utiliza los filtros para analizar la información ya guardada por centro, mes, asignatura y fecha.</p>
+                    </div>
+                </div>
+                <div class="filter-grid">
+                    <div class="field center-field"><label>Centro</label><select id="centerFilter"><option value="">Todos los centros</option></select></div>
+                    <div class="field month-field"><label>Mes registrado</label><select id="monthFilter"><option value="">Todos los meses</option></select></div>
+                    <div class="field subject-field"><label>Asignatura</label><select id="subjectFilter"><option value="">Todas las asignaturas</option></select></div>
+                    <div class="field event-field"><label>Evento</label><select id="eventFilter"><option value="">Todos los eventos</option></select></div>
+                    <div class="field component-field"><label>Componente</label><select id="componentFilter"><option value="">Todos los componentes</option></select></div>
+                    <div class="field period-field"><label>Periodo según fechas</label><select id="periodFilter">
+                        <option value="all">Todo el periodo</option><option value="7">Últimos 7 días</option><option value="30">Últimos 30 días</option><option value="month">Mes del último registro</option><option value="custom">Fechas personalizadas</option>
+                    </select></div>
+                    <div class="field date-field"><label>Desde</label><input id="dateFrom" type="date"></div>
+                    <div class="field date-field"><label>Hasta</label><input id="dateTo" type="date"></div>
+                    <div class="toolbar-actions">
+                        <button id="pdfBtn" type="button" class="download-button">Descargar informe PDF</button>
+                        <button id="resetBtn" type="button" class="secondary">Restablecer filtros</button>
+                        <button id="clearBtn" type="button" class="danger">Eliminar datos guardados</button>
+                    </div>
+                </div>
+            </section>
+            <div id="status" class="status no-pdf">Selecciona el centro, el mes y carga conjuntamente los JSON de sus asignaturas. La información quedará guardada en este navegador.
             </div>
-            <section id="loadedFilesCard" class="card loaded-files no-pdf" style="display:none">
-                <h2>Archivos cargados</h2>
-                <div id="fileChips" class="file-chips"></div>
-            </section>
             <div class="pdf-only report-note" id="pdfMeta"></div>
             <section class="kpis">
                 <div class="card kpi"><small>Registros</small><strong id="kpiRecords">0</strong><span>Eventos
@@ -690,11 +907,19 @@
             </section>
             <section class="grid">
                 <div class="card wide">
+                    <h2>Calendario de registro de eventos</h2>
+                    <div class="card-subtitle">Vista mensual de los días con actividad. Cada casilla muestra el total de eventos registrados en ese día.</div>
+                    <div id="datesChart" class="activity-calendar empty">Sin datos.</div>
+                </div>
+                <div id="centersComparisonCard" class="card wide" style="display:none">
+                    <h2>Comparación de uso entre centros educativos</h2>
+                    <div class="card-subtitle">Cantidad de registros generados por cada centro según el mes y los demás filtros seleccionados. Un mayor total representa una mayor interacción registrada en Moodle.</div>
+                    <div id="centersChart" class="bars empty">Carga información de varios centros para generar la comparación.</div>
+                </div>
+                <div class="card wide">
                     <h2>Comparación de uso entre asignaturas</h2>
-                    <div class="card-subtitle">Cantidad total de registros generados en cada clase según los filtros
-                        aplicados.</div>
-                    <div id="subjectsChart" class="bars empty">Carga los archivos JSON para comparar las asignaturas.
-                    </div>
+                    <div class="card-subtitle">Cantidad total de registros generados en cada clase según los filtros aplicados.</div>
+                    <div id="subjectsChart" class="bars empty">Carga los archivos JSON para comparar las asignaturas.</div>
                 </div>
                 <div class="card">
                     <h2>Eventos más frecuentes</h2>
@@ -703,19 +928,18 @@
                 </div>
                 <div class="card">
                     <h2>Actividad por componente</h2>
-                    <div class="card-subtitle">Uso de Sistema, H5P, cuestionarios, tareas, recursos y otros componentes.
-                    </div>
+                    <div class="card-subtitle">Uso de Sistema, H5P, cuestionarios, tareas, recursos y otros componentes.</div>
                     <div id="componentsChart" class="bars empty">Sin datos.</div>
-                </div>
-                <div class="card">
-                    <h2>Actividad por fecha</h2>
-                    <div class="card-subtitle">Evolución diaria dentro del periodo seleccionado.</div>
-                    <div id="datesChart" class="bars empty">Sin datos.</div>
                 </div>
                 <div class="card">
                     <h2>Usuarios con mayor actividad</h2>
                     <div class="card-subtitle">Usuarios con más eventos registrados en el conjunto filtrado.</div>
                     <div id="usersChart" class="bars empty">Sin datos.</div>
+                </div>
+                <div class="card">
+                    <h2>Usuarios con menor actividad</h2>
+                    <div class="card-subtitle">Usuarios con menos eventos registrados, considerando únicamente nombres de usuario válidos.</div>
+                    <div id="leastUsersChart" class="bars empty">Sin datos.</div>
                 </div>
             </section>
             <section class="card table-card">
@@ -761,50 +985,699 @@
                     </tbody>
                 </table>
             </section>
-            <div class="report-note">Nota metodológica: cada registro representa un evento generado en Moodle. Un mayor
-                número de registros refleja mayor interacción registrada, pero no constituye por sí solo una medición
-                directa del aprendizaje o del tiempo efectivo de estudio.</div>
+            
         </main>
         <footer>Telebásica Digital</footer>
     </div>
 
 
+
     <script>
         (function () {
             'use strict';
-            let rawData = []; let loadedFiles = [];
+
+            let rawData = [];
+            let loadedFiles = [];
+            const DB_NAME = 'telebasica_dashboard_db';
+            const DB_VERSION = 1;
+            const STORE_NAME = 'datasets';
+
             const $ = id => document.getElementById(id);
             const fmt = n => Number(n || 0).toLocaleString('es-HN');
-            const setStatus = (msg, type = '') => { const el = $('status'); el.textContent = msg; el.className = 'status no-pdf' + (type ? ' ' + type : '') };
-            function flattenRecords(value) { if (Array.isArray(value)) return value.flatMap(flattenRecords); if (value && typeof value === 'object' && ('hora' in value || 'nombreevento' in value || 'componente' in value)) return [value]; if (value && typeof value === 'object') return Object.values(value).flatMap(flattenRecords); return [] }
-            function parseMoodleDate(value) { if (!value) return null; const m = String(value).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4}),?\s*(\d{1,2}):(\d{2}):(\d{2})$/); if (!m) return null; let y = +m[3]; if (y < 100) y += 2000; const d = new Date(y, +m[2] - 1, +m[1], +m[4], +m[5], +m[6]); return isNaN(d) ? null : d }
-            function toISODate(d) { if (!d) return ''; const z = n => String(n).padStart(2, '0'); return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate()) }
-            function formatDate(d) { return d ? d.toLocaleDateString('es-HN', { day: '2-digit', month: '2-digit', year: 'numeric' }) : '-' }
-            function normalizeSubject(value) { return String(value || '').replace(/^Curso:\s*/i, '').replace(/\s+/g, ' ').trim() }
-            function detectSubject(records, filename) { const counts = {}; for (const r of records) { const c = String(r.contextodelevento || ''); const m = c.match(/^Curso:\s*(.+)$/i); if (m) { const s = normalizeSubject(m[1]); counts[s] = (counts[s] || 0) + 1 } } const best = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]; if (best) return best[0]; return filename.replace(/\.json$/i, '').replace(/^logs[_-]?/i, '').replace(/[_-]+/g, ' ').trim() || 'Asignatura sin identificar' }
-            function countBy(arr, key) { const out = {}; for (const item of arr) { const v = String(typeof key === 'function' ? key(item) : (item[key] || 'Sin especificar')).trim(); out[v] = (out[v] || 0) + 1 } return out }
-            function topEntries(obj, n = 10) { return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n) }
-            function esc(v) { return String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c])) }
-            function fillSelect(id, values, label, preserve = true) { const s = $(id), old = preserve ? s.value : ''; s.innerHTML = '<option value="">' + label + '</option>' + [...new Set(values.filter(Boolean).map(String))].sort((a, b) => a.localeCompare(b, 'es')).map(v => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join(''); if ([...s.options].some(o => o.value === old)) s.value = old }
-            function renderBars(id, entries, subject = false) { const el = $(id); if (!entries.length) { el.className = 'bars empty'; el.textContent = 'No hay información para mostrar.'; return } const max = Math.max(...entries.map(x => x[1]), 1); el.className = 'bars'; el.innerHTML = entries.map(([l, v]) => '<div class="bar-row"><div class="bar-label" title="' + esc(l) + '">' + esc(l) + '</div><div class="bar-track"><div class="bar-fill ' + (subject ? 'subject' : '') + '" style="width:' + Math.max(1, (v / max) * 100) + '%"></div></div><div class="bar-value">' + fmt(v) + '</div></div>').join('') }
-            function getDataBounds() { const ds = rawData.map(x => x._date).filter(Boolean).sort((a, b) => a - b); return { min: ds[0] || null, max: ds[ds.length - 1] || null } }
-            function getFilteredData() { const sf = $('subjectFilter').value, ef = $('eventFilter').value, cf = $('componentFilter').value; const from = $('dateFrom').value ? new Date($('dateFrom').value + 'T00:00:00') : null; const to = $('dateTo').value ? new Date($('dateTo').value + 'T23:59:59') : null; return rawData.filter(x => (!sf || x._subject === sf) && (!ef || String(x.nombreevento || '') === ef) && (!cf || String(x.componente || '') === cf) && (!from || x._date >= from) && (!to || x._date <= to)) }
-            function updatePeriodLabel(data) { const ds = data.map(x => x._date).filter(Boolean).sort((a, b) => a - b); $('reportPeriod').textContent = ds.length ? 'Periodo analizado: ' + formatDate(ds[0]) + ' al ' + formatDate(ds[ds.length - 1]) : 'Periodo analizado: sin datos' }
-            function applyQuickPeriod() { const mode = $('periodFilter').value, b = getDataBounds(); if (!b.max) return; if (mode === 'all') { $('dateFrom').value = ''; $('dateTo').value = '' } else if (mode === '7' || mode === '30') { const days = +mode; const from = new Date(b.max); from.setDate(from.getDate() - (days - 1)); $('dateFrom').value = toISODate(from); $('dateTo').value = toISODate(b.max) } else if (mode === 'month') { const end = b.max; const start = new Date(end.getFullYear(), end.getMonth(), 1); $('dateFrom').value = toISODate(start); $('dateTo').value = toISODate(end) } render() }
-            function render() {
-                const data = getFilteredData(); $('kpiRecords').textContent = fmt(data.length); $('kpiUsers').textContent = fmt(new Set(data.map(x => x.nombrecompletodelusuario).filter(Boolean)).size); $('kpiSubjects').textContent = fmt(new Set(data.map(x => x._subject).filter(Boolean)).size); $('kpiComponents').textContent = fmt(new Set(data.map(x => x.componente).filter(Boolean)).size); $('kpiDays').textContent = fmt(new Set(data.map(x => x._date ? toISODate(x._date) : '').filter(Boolean)).size); updatePeriodLabel(data);
-                renderBars('subjectsChart', Object.entries(countBy(data, x => x._subject)).sort((a, b) => b[1] - a[1]), true); renderBars('eventsChart', topEntries(countBy(data, 'nombreevento'), 10)); renderBars('componentsChart', topEntries(countBy(data, 'componente'), 10));
-                const dc = {}; for (const x of data) { const d = x._date ? toISODate(x._date) : 'Sin fecha'; dc[d] = (dc[d] || 0) + 1 } renderBars('datesChart', Object.entries(dc).sort((a, b) => a[0].localeCompare(b[0])).slice(-31)); renderBars('usersChart', topEntries(countBy(data, 'nombrecompletodelusuario'), 10));
-                const bySub = {}; for (const x of data) { const s = x._subject || 'Sin identificar'; if (!bySub[s]) bySub[s] = { total: 0, users: new Set(), components: new Set(), days: new Set() }; const g = bySub[s]; g.total++; if (x.nombrecompletodelusuario) g.users.add(x.nombrecompletodelusuario); if (x.componente) g.components.add(x.componente); if (x._date) g.days.add(toISODate(x._date)) } const total = data.length || 1; const subRows = Object.entries(bySub).sort((a, b) => b[1].total - a[1].total).map(([s, v], i) => '<tr><td><span class="rank">' + (i + 1) + '</span></td><td><strong>' + esc(s) + '</strong></td><td>' + fmt(v.total) + '</td><td class="share">' + ((v.total / total) * 100).toFixed(1) + '%</td><td>' + fmt(v.users.size) + '</td><td>' + fmt(v.components.size) + '</td><td>' + fmt(v.days.size) + '</td></tr>').join(''); $('subjectTable').innerHTML = subRows || '<tr><td colspan="7" class="empty">No hay datos para los filtros seleccionados.</td></tr>';
-                const users = {}; for (const x of data) { const n = String(x.nombrecompletodelusuario || 'Sin identificar'); if (!users[n]) users[n] = { total: 0, subjects: new Set(), components: new Set(), last: null }; const u = users[n]; u.total++; u.subjects.add(x._subject); if (x.componente) u.components.add(x.componente); if (x._date && (!u.last || x._date > u.last)) u.last = x._date } const rows = Object.entries(users).sort((a, b) => b[1].total - a[1].total).map(([n, v]) => '<tr><td>' + esc(n) + '</td><td>' + fmt(v.total) + '</td><td>' + esc([...v.subjects].join(', ')) + '</td><td>' + esc([...v.components].join(', ')) + '</td><td>' + (v.last ? v.last.toLocaleString('es-HN') : '-') + '</td></tr>').join(''); $('userTable').innerHTML = rows || '<tr><td colspan="5" class="empty">No hay datos para los filtros seleccionados.</td></tr>'
+            const setStatus = (msg, type = '') => {
+                const el = $('status');
+                el.textContent = msg;
+                el.className = 'status no-pdf' + (type ? ' ' + type : '');
+            };
+
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, DB_VERSION);
+                    request.onupgradeneeded = () => {
+                        const db = request.result;
+                        if (!db.objectStoreNames.contains(STORE_NAME)) {
+                            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        }
+                    };
+                    request.onsuccess = () => resolve(request.result);
+                    request.onerror = () => reject(request.error);
+                });
             }
-            function readFile(file) { return new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(String(r.result || '')); r.onerror = () => reject(r.error || new Error('No fue posible leer el archivo.')); r.readAsText(file, 'UTF-8') }) }
-            function renderFiles() { if (!loadedFiles.length) { $('loadedFilesCard').style.display = 'none'; return } $('loadedFilesCard').style.display = 'block'; $('fileChips').innerHTML = loadedFiles.map(f => '<span class="chip">' + esc(f.subject) + ' <b>' + fmt(f.records) + '</b></span>').join('') }
-            $('fileInput').addEventListener('change', async function () { const files = [...(this.files || [])]; if (!files.length) return; setStatus('Procesando ' + files.length + ' archivo(s)…'); try { const newRecords = [], fileInfo = []; for (const file of files) { let text = (await readFile(file)).replace(/^\uFEFF/, '').trim(); const records = flattenRecords(JSON.parse(text)); if (!records.length) throw new Error('El archivo ' + file.name + ' no contiene registros reconocibles.'); const subject = detectSubject(records, file.name); for (const r of records) newRecords.push({ ...r, _subject: subject, _sourceFile: file.name, _date: parseMoodleDate(r.hora) }); fileInfo.push({ name: file.name, subject, records: records.length }) } rawData = newRecords; loadedFiles = fileInfo; fillSelect('subjectFilter', rawData.map(x => x._subject), 'Todas las asignaturas', false); fillSelect('eventFilter', rawData.map(x => x.nombreevento), 'Todos los eventos', false); fillSelect('componentFilter', rawData.map(x => x.componente), 'Todos los componentes', false); const b = getDataBounds(); if (b.min && b.max) { $('dateFrom').min = toISODate(b.min); $('dateFrom').max = toISODate(b.max); $('dateTo').min = toISODate(b.min); $('dateTo').max = toISODate(b.max) } $('periodFilter').value = 'all'; $('dateFrom').value = ''; $('dateTo').value = ''; renderFiles(); render(); setStatus('Carga completada: ' + files.length + ' archivo(s), ' + fmt(rawData.length) + ' registros y ' + fmt(new Set(rawData.map(x => x._subject)).size) + ' asignatura(s).', 'ok') } catch (e) { console.error(e); setStatus('Error al procesar los archivos: ' + e.message, 'error') } });
-            ['subjectFilter', 'eventFilter', 'componentFilter'].forEach(id => $(id).addEventListener('change', render)); $('periodFilter').addEventListener('change', applyQuickPeriod);['dateFrom', 'dateTo'].forEach(id => $(id).addEventListener('change', () => { $('periodFilter').value = 'custom'; render() }));
-            $('resetBtn').addEventListener('click', () => { $('subjectFilter').value = ''; $('eventFilter').value = ''; $('componentFilter').value = ''; $('periodFilter').value = 'all'; $('dateFrom').value = ''; $('dateTo').value = ''; render() }); $('clearBtn').addEventListener('click', () => { rawData = []; loadedFiles = []; $('fileInput').value = ''; renderFiles(); fillSelect('subjectFilter', [], 'Todas las asignaturas', false); fillSelect('eventFilter', [], 'Todos los eventos', false); fillSelect('componentFilter', [], 'Todos los componentes', false); render(); setStatus('Archivos retirados. Selecciona nuevamente los JSON.') });
-            $('pdfBtn').addEventListener('click', async () => { if (!rawData.length) { setStatus('Primero debes cargar los archivos JSON.', 'error'); return } if (!window.html2canvas || !window.jspdf) { setStatus('No fue posible cargar el generador PDF. Verifica la conexión a internet e inténtalo nuevamente.', 'error'); return } const btn = $('pdfBtn'); btn.disabled = true; btn.textContent = 'Generando PDF…'; document.documentElement.classList.add('pdf-mode'); $('pdfMeta').textContent = 'Informe generado el ' + new Date().toLocaleString('es-HN') + '. Filtros aplicados: ' + ($('subjectFilter').value || 'Todas las asignaturas') + ', ' + ($('eventFilter').value || 'Todos los eventos') + ', ' + ($('componentFilter').value || 'Todos los componentes') + '.'; try { await new Promise(r => setTimeout(r, 250)); const canvas = await html2canvas($('reportArea'), { scale: 1.35, useCORS: true, backgroundColor: '#ffffff', windowWidth: 1500 }); const img = canvas.toDataURL('image/jpeg', 0.92); const { jsPDF } = window.jspdf; const pdf = new jsPDF('p', 'mm', 'a4'); const pw = 210, ph = 297, margin = 7, usable = pw - margin * 2; const ih = canvas.height * usable / canvas.width; let remaining = ih, pos = margin; pdf.addImage(img, 'JPEG', margin, pos, usable, ih); remaining -= ph - margin * 2; while (remaining > 0) { pos = margin - (ih - remaining); pdf.addPage(); pdf.addImage(img, 'JPEG', margin, pos, usable, ih); remaining -= ph - margin * 2 } pdf.save('Informe_consolidado_Moodle_' + new Date().toISOString().slice(0, 10) + '.pdf'); setStatus('El informe PDF se descargó correctamente.', 'ok') } catch (e) { console.error(e); setStatus('No se pudo generar el PDF: ' + e.message, 'error') } finally { document.documentElement.classList.remove('pdf-mode'); btn.disabled = false; btn.textContent = 'Descargar informe PDF' } });
-            render();
+
+            async function saveDataset(dataset) {
+                const db = await openDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    tx.objectStore(STORE_NAME).put(dataset);
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => reject(tx.error);
+                });
+            }
+
+            async function getAllDatasets() {
+                const db = await openDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(STORE_NAME, 'readonly');
+                    const request = tx.objectStore(STORE_NAME).getAll();
+                    request.onsuccess = () => resolve(request.result || []);
+                    request.onerror = () => reject(request.error);
+                });
+            }
+
+            async function clearDatasets() {
+                const db = await openDB();
+                return new Promise((resolve, reject) => {
+                    const tx = db.transaction(STORE_NAME, 'readwrite');
+                    tx.objectStore(STORE_NAME).clear();
+                    tx.oncomplete = () => resolve();
+                    tx.onerror = () => reject(tx.error);
+                });
+            }
+
+            function flattenRecords(value) {
+                if (Array.isArray(value)) return value.flatMap(flattenRecords);
+                if (value && typeof value === 'object' &&
+                    ('hora' in value || 'nombreevento' in value || 'componente' in value)) return [value];
+                if (value && typeof value === 'object') return Object.values(value).flatMap(flattenRecords);
+                return [];
+            }
+
+            function parseMoodleDate(value) {
+                if (!value) return null;
+                const m = String(value).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4}),?\s*(\d{1,2}):(\d{2}):(\d{2})$/);
+                if (!m) return null;
+                let y = +m[3];
+                if (y < 100) y += 2000;
+                const d = new Date(y, +m[2] - 1, +m[1], +m[4], +m[5], +m[6]);
+                return isNaN(d) ? null : d;
+            }
+
+            function toISODate(d) {
+                if (!d) return '';
+                const z = n => String(n).padStart(2, '0');
+                return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+            }
+
+            function formatDate(d) {
+                return d ? d.toLocaleDateString('es-HN', {
+                    day: '2-digit', month: '2-digit', year: 'numeric'
+                }) : '-';
+            }
+
+            function formatMonth(value) {
+                if (!value) return 'Sin mes';
+                const [year, month] = value.split('-').map(Number);
+                return new Date(year, month - 1, 1).toLocaleDateString('es-HN', {
+                    month: 'long', year: 'numeric'
+                });
+            }
+
+            function normalizeSubject(value) {
+                return String(value || '').replace(/^Curso:\s*/i, '').replace(/\s+/g, ' ').trim();
+            }
+
+            function normalizeEventName(value) {
+                const event = String(value || '').trim();
+                if (!event || event === '-' || event.toLowerCase() === 'sin especificar') return '';
+                const translations = {
+                    'mod_hvp: attempt submitted': 'Actividad H5P enviada',
+                    'mod_hvp: attempt started': 'Actividad H5P iniciada',
+                    'attempt submitted': 'Intento enviado',
+                    'attempt started': 'Intento iniciado'
+                };
+                return translations[event.toLowerCase()] || event;
+            }
+
+            function detectSubject(records, filename) {
+                const counts = {};
+                for (const r of records) {
+                    const c = String(r.contextodelevento || '');
+                    const m = c.match(/^Curso:\s*(.+)$/i);
+                    if (m) {
+                        const s = normalizeSubject(m[1]);
+                        counts[s] = (counts[s] || 0) + 1;
+                    }
+                }
+                const best = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+                if (best) return best[0];
+                return filename.replace(/\.json$/i, '').replace(/^logs[_-]?/i, '')
+                    .replace(/[_-]+/g, ' ').trim() || 'Asignatura sin identificar';
+            }
+
+            function countBy(arr, key) {
+                const out = {};
+                for (const item of arr) {
+                    const v = String(typeof key === 'function'
+                        ? key(item)
+                        : (item[key] || 'Sin especificar')).trim();
+                    out[v] = (out[v] || 0) + 1;
+                }
+                return out;
+            }
+
+            function topEntries(obj, n = 10) {
+                return Object.entries(obj).sort((a, b) => b[1] - a[1]).slice(0, n);
+            }
+
+            function esc(v) {
+                return String(v ?? '').replace(/[&<>"']/g, c => ({
+                    '&': '&amp;', '<': '&lt;', '>': '&gt;',
+                    '"': '&quot;', "'": '&#039;'
+                }[c]));
+            }
+
+            function fillSelect(id, values, label, preserve = true) {
+                const s = $(id);
+                const old = preserve ? s.value : '';
+                const unique = [...new Set(values.filter(Boolean).map(String))]
+                    .sort((a, b) => a.localeCompare(b, 'es'));
+                s.innerHTML = '<option value="">' + label + '</option>' +
+                    unique.map(v => '<option value="' + esc(v) + '">' + esc(v) + '</option>').join('');
+                if ([...s.options].some(o => o.value === old)) s.value = old;
+            }
+
+            function updateCenterDatalist() { /* Centros definidos en el selector institucional. */ }
+
+            function renderBars(id, entries, subject = false) {
+                const el = $(id);
+                if (!entries.length) {
+                    el.className = 'bars empty';
+                    el.textContent = 'No hay información para mostrar.';
+                    return;
+                }
+                const max = Math.max(...entries.map(x => x[1]), 1);
+                el.className = 'bars';
+                el.innerHTML = entries.map(([l, v]) =>
+                    '<div class="bar-row">' +
+                    '<div class="bar-label" title="' + esc(l) + '">' + esc(l) + '</div>' +
+                    '<div class="bar-track"><div class="bar-fill ' + (subject ? 'subject' : '') +
+                    '" style="width:' + Math.max(1, (v / max) * 100) + '%"></div></div>' +
+                    '<div class="bar-value">' + fmt(v) + '</div></div>'
+                ).join('');
+            }
+
+            function renderActivityCalendar(data) {
+                const el = $('datesChart');
+                const valid = data.filter(x => x._date);
+                if (!valid.length) {
+                    el.className = 'activity-calendar empty';
+                    el.textContent = 'No hay fechas con actividad para los filtros seleccionados.';
+                    return;
+                }
+
+                const counts = {};
+                for (const x of valid) {
+                    const key = toISODate(x._date);
+                    counts[key] = (counts[key] || 0) + 1;
+                }
+
+                const monthKeys = [...new Set(Object.keys(counts).map(d => d.slice(0, 7)))].sort();
+                const max = Math.max(...Object.values(counts), 1);
+                const weekdays = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+
+                el.className = 'activity-calendar';
+                el.innerHTML = monthKeys.map(monthKey => {
+                    const [year, month] = monthKey.split('-').map(Number);
+                    const daysInMonth = new Date(year, month, 0).getDate();
+                    const first = new Date(year, month - 1, 1);
+                    const offset = (first.getDay() + 6) % 7;
+                    const monthTotal = Object.entries(counts)
+                        .filter(([k]) => k.startsWith(monthKey))
+                        .reduce((sum, [, v]) => sum + v, 0);
+                    let cells = '';
+                    for (let i = 0; i < offset; i++) cells += '<div class="calendar-day empty-day"></div>';
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const key = monthKey + '-' + String(day).padStart(2, '0');
+                        const value = counts[key] || 0;
+                        let level = '';
+                        if (value > 0) {
+                            const ratio = value / max;
+                            level = ratio <= .25 ? 'level-1' : ratio <= .5 ? 'level-2' : ratio <= .75 ? 'level-3' : 'level-4';
+                        }
+                        const dateLabel = new Date(year, month - 1, day).toLocaleDateString('es-HN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                        cells += '<div class="calendar-day ' + (value ? 'has-activity ' + level : '') + '" title="' + esc(dateLabel + ': ' + fmt(value) + ' eventos') + '">' +
+                            '<span class="calendar-day-number">' + day + '</span>' +
+                            '<span class="calendar-day-count">' + (value ? fmt(value) + ' eventos' : 'Sin actividad') + '</span></div>';
+                    }
+                    const title = new Date(year, month - 1, 1).toLocaleDateString('es-HN', { month: 'long', year: 'numeric' });
+                    return '<section class="calendar-month"><div class="calendar-month-header"><h3>' + esc(title) + '</h3><span class="calendar-month-total">' + fmt(monthTotal) + ' eventos</span></div>' +
+                        '<div class="calendar-grid">' + weekdays.map(w => '<div class="calendar-weekday">' + w + '</div>').join('') + cells + '</div>' +
+                        '<div class="calendar-legend"><span>Menor actividad</span><span class="legend-box level-1"></span><span class="legend-box level-2"></span><span class="legend-box level-3"></span><span class="legend-box level-4"></span><span>Mayor actividad</span></div></section>';
+                }).join('');
+            }
+
+            function getDataBounds() {
+                const ds = rawData.map(x => x._date).filter(Boolean).sort((a, b) => a - b);
+                return { min: ds[0] || null, max: ds[ds.length - 1] || null };
+            }
+
+            function getFilteredData() {
+                const center = $('centerFilter').value;
+                const month = $('monthFilter').value;
+                const sf = $('subjectFilter').value;
+                const ef = $('eventFilter').value;
+                const cf = $('componentFilter').value;
+                const from = $('dateFrom').value ? new Date($('dateFrom').value + 'T00:00:00') : null;
+                const to = $('dateTo').value ? new Date($('dateTo').value + 'T23:59:59') : null;
+
+                return rawData.filter(x =>
+                    (!center || x._center === center) &&
+                    (!month || x._reportMonth === month) &&
+                    (!sf || x._subject === sf) &&
+                    (!ef || String(x._eventName || '') === ef) &&
+                    (!cf || String(x.componente || '') === cf) &&
+                    (!from || x._date >= from) &&
+                    (!to || x._date <= to)
+                );
+            }
+
+            function updatePeriodLabel(data) {
+                const ds = data.map(x => x._date).filter(Boolean).sort((a, b) => a - b);
+                const center = $('centerFilter').value || 'Todos los centros';
+                const month = $('monthFilter').value ? formatMonth($('monthFilter').value) : 'Todos los meses';
+                const dates = ds.length
+                    ? formatDate(ds[0]) + ' al ' + formatDate(ds[ds.length - 1])
+                    : 'sin datos';
+                $('reportPeriod').textContent = center + ' | ' + month + ' | Periodo: ' + dates;
+            }
+
+            function applyQuickPeriod() {
+                const mode = $('periodFilter').value;
+                const b = getDataBounds();
+                if (!b.max) return;
+
+                if (mode === 'all') {
+                    $('dateFrom').value = '';
+                    $('dateTo').value = '';
+                } else if (mode === '7' || mode === '30') {
+                    const days = +mode;
+                    const from = new Date(b.max);
+                    from.setDate(from.getDate() - (days - 1));
+                    $('dateFrom').value = toISODate(from);
+                    $('dateTo').value = toISODate(b.max);
+                } else if (mode === 'month') {
+                    const end = b.max;
+                    const start = new Date(end.getFullYear(), end.getMonth(), 1);
+                    $('dateFrom').value = toISODate(start);
+                    $('dateTo').value = toISODate(end);
+                }
+                render();
+            }
+
+            function render() {
+                const data = getFilteredData();
+
+                $('kpiRecords').textContent = fmt(data.length);
+                $('kpiUsers').textContent = fmt(new Set(
+                    data.map(x => x.nombrecompletodelusuario).filter(Boolean)
+                ).size);
+                $('kpiSubjects').textContent = fmt(new Set(
+                    data.map(x => x._subject).filter(Boolean)
+                ).size);
+                $('kpiComponents').textContent = fmt(new Set(
+                    data.map(x => x.componente).filter(Boolean)
+                ).size);
+                $('kpiDays').textContent = fmt(new Set(
+                    data.map(x => x._date ? toISODate(x._date) : '').filter(Boolean)
+                ).size);
+
+                updatePeriodLabel(data);
+
+                // La comparación entre centros se muestra únicamente cuando el filtro
+                // está en "Todos los centros" y existen datos de más de un centro.
+                const centerEntries = Object.entries(
+                    countBy(data, x => x._center || 'Centro sin identificar')
+                ).sort((a, b) => b[1] - a[1]);
+                const showCenterComparison = !$('centerFilter').value && centerEntries.length > 1;
+                $('centersComparisonCard').style.display = showCenterComparison ? '' : 'none';
+                if (showCenterComparison) {
+                    renderBars('centersChart', centerEntries);
+                }
+
+                renderBars('subjectsChart',
+                    Object.entries(countBy(data, x => x._subject)).sort((a, b) => b[1] - a[1]), true);
+                const validEvents = data.filter(x => x._eventName);
+                renderBars('eventsChart', topEntries(countBy(validEvents, '_eventName'), 10));
+                renderBars('componentsChart', topEntries(countBy(data, 'componente'), 10));
+
+                renderActivityCalendar(data);
+
+                const validUserData = data.filter(x =>
+                    String(x.nombrecompletodelusuario || '').trim() &&
+                    String(x.nombrecompletodelusuario || '').trim() !== '-' &&
+                    String(x.nombrecompletodelusuario || '').trim().toLowerCase() !== 'sin identificar'
+                );
+                const userCounts = countBy(validUserData, 'nombrecompletodelusuario');
+                const mostActiveUsers = Object.entries(userCounts)
+                    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'es'))
+                    .slice(0, 10);
+                const leastActiveUsers = Object.entries(userCounts)
+                    .sort((a, b) => a[1] - b[1] || a[0].localeCompare(b[0], 'es'))
+                    .slice(0, 10);
+
+                renderBars('usersChart', mostActiveUsers);
+                renderBars('leastUsersChart', leastActiveUsers);
+
+                const bySub = {};
+                for (const x of data) {
+                    const s = x._subject || 'Sin identificar';
+                    if (!bySub[s]) bySub[s] = {
+                        total: 0, users: new Set(), components: new Set(), days: new Set()
+                    };
+                    const g = bySub[s];
+                    g.total++;
+                    if (x.nombrecompletodelusuario) g.users.add(x.nombrecompletodelusuario);
+                    if (x.componente) g.components.add(x.componente);
+                    if (x._date) g.days.add(toISODate(x._date));
+                }
+
+                const total = data.length || 1;
+                const subRows = Object.entries(bySub)
+                    .sort((a, b) => b[1].total - a[1].total)
+                    .map(([s, v], i) =>
+                        '<tr><td><span class="rank">' + (i + 1) + '</span></td>' +
+                        '<td><strong>' + esc(s) + '</strong></td>' +
+                        '<td>' + fmt(v.total) + '</td>' +
+                        '<td class="share">' + ((v.total / total) * 100).toFixed(1) + '%</td>' +
+                        '<td>' + fmt(v.users.size) + '</td>' +
+                        '<td>' + fmt(v.components.size) + '</td>' +
+                        '<td>' + fmt(v.days.size) + '</td></tr>'
+                    ).join('');
+                $('subjectTable').innerHTML = subRows ||
+                    '<tr><td colspan="7" class="empty">No hay datos para los filtros seleccionados.</td></tr>';
+
+                const users = {};
+                for (const x of data) {
+                    const n = String(x.nombrecompletodelusuario || 'Sin identificar');
+                    if (!users[n]) users[n] = {
+                        total: 0, subjects: new Set(), components: new Set(), last: null
+                    };
+                    const u = users[n];
+                    u.total++;
+                    u.subjects.add(x._subject);
+                    if (x.componente) u.components.add(x.componente);
+                    if (x._date && (!u.last || x._date > u.last)) u.last = x._date;
+                }
+
+                const validUserEntries = Object.entries(users).filter(([n]) => {
+                    const name = String(n || '').trim();
+                    return name && name !== '-' && name.toLowerCase() !== 'sin identificar';
+                });
+
+                const rows = validUserEntries
+                    .sort((a, b) => b[1].total - a[1].total || a[0].localeCompare(b[0], 'es'))
+                    .map(([n, v]) =>
+                        '<tr><td>' + esc(n) + '</td>' +
+                        '<td>' + fmt(v.total) + '</td>' +
+                        '<td>' + esc([...v.subjects].filter(Boolean).join(', ')) + '</td>' +
+                        '<td>' + esc([...v.components].filter(Boolean).join(', ')) + '</td>' +
+                        '<td>' + (v.last ? v.last.toLocaleString('es-HN') : '-') + '</td></tr>'
+                    ).join('');
+                $('userTable').innerHTML = rows ||
+                    '<tr><td colspan="5" class="empty">No hay datos para los filtros seleccionados.</td></tr>';
+            }
+
+            function readFile(file) {
+                return new Promise((resolve, reject) => {
+                    const r = new FileReader();
+                    r.onload = () => resolve(String(r.result || ''));
+                    r.onerror = () => reject(r.error || new Error('No fue posible leer el archivo.'));
+                    r.readAsText(file, 'UTF-8');
+                });
+            }
+
+            function rebuildFromDatasets(datasets) {
+                rawData = [];
+                loadedFiles = [];
+
+                for (const ds of datasets) {
+                    loadedFiles.push({
+                        id: ds.id,
+                        name: ds.fileName,
+                        subject: ds.subject,
+                        records: ds.records.length,
+                        center: ds.center,
+                        month: ds.month
+                    });
+
+                    for (const r of ds.records) {
+                        rawData.push({
+                            ...r,
+                            _subject: ds.subject,
+                            _sourceFile: ds.fileName,
+                            _center: ds.center,
+                            _reportMonth: ds.month,
+                            _date: parseMoodleDate(r.hora),
+                            _eventName: normalizeEventName(r.nombreevento)
+                        });
+                    }
+                }
+
+                fillSelect('centerFilter', rawData.map(x => x._center), 'Todos los centros', false);
+                fillSelect('monthFilter', rawData.map(x => x._reportMonth), 'Todos los meses', false);
+
+                [...$('monthFilter').options].forEach(option => {
+                    if (option.value) option.textContent = formatMonth(option.value);
+                });
+
+                fillSelect('subjectFilter', rawData.map(x => x._subject),
+                    'Todas las asignaturas', false);
+                fillSelect('eventFilter', rawData.map(x => x._eventName),
+                    'Todos los eventos', false);
+                fillSelect('componentFilter', rawData.map(x => x.componente),
+                    'Todos los componentes', false);
+
+                updateCenterDatalist();
+
+                const b = getDataBounds();
+                if (b.min && b.max) {
+                    $('dateFrom').min = toISODate(b.min);
+                    $('dateFrom').max = toISODate(b.max);
+                    $('dateTo').min = toISODate(b.min);
+                    $('dateTo').max = toISODate(b.max);
+                }
+
+                renderFiles();
+                render();
+            }
+
+            function renderFiles() {
+                // Los datos permanecen guardados en IndexedDB, pero no se muestran
+                // en pantalla para mantener el dashboard limpio y fácil de usar.
+            }
+
+            async function refreshStoredData(showMessage = false) {
+                const datasets = await getAllDatasets();
+                rebuildFromDatasets(datasets);
+                if (showMessage) {
+                    setStatus(
+                        'Datos disponibles: ' +
+                        fmt(new Set(datasets.map(x => x.center)).size) + ' centro(s), ' +
+                        fmt(new Set(datasets.map(x => x.month)).size) + ' mes(es), ' +
+                        fmt(datasets.length) + ' archivo(s) y ' +
+                        fmt(rawData.length) + ' registros.',
+                        'ok'
+                    );
+                }
+            }
+
+            $('fileInput').addEventListener('change', async function () {
+                const files = [...(this.files || [])];
+                if (!files.length) return;
+
+                const center = $('loadCenter').value;
+                const month = $('loadMonth').value;
+
+                if (!center) {
+                    this.value = '';
+                    setStatus('Antes de cargar los archivos, selecciona un centro educativo.', 'error');
+                    return;
+                }
+                if (!month) {
+                    this.value = '';
+                    setStatus('Antes de cargar los archivos, selecciona el mes al que corresponde la información.', 'error');
+                    return;
+                }
+
+                setStatus('Procesando y guardando ' + files.length + ' archivo(s)…');
+
+                try {
+                    let savedRecords = 0;
+                    for (const file of files) {
+                        const text = (await readFile(file)).replace(/^\uFEFF/, '').trim();
+                        const records = flattenRecords(JSON.parse(text));
+                        if (!records.length) {
+                            throw new Error('El archivo ' + file.name +
+                                ' no contiene registros reconocibles.');
+                        }
+
+                        const subject = detectSubject(records, file.name);
+                        const safeRecords = records.map(r => ({ ...r }));
+                        const id = [center.toLowerCase(), month, file.name.toLowerCase()].join('|');
+
+                        await saveDataset({
+                            id,
+                            center,
+                            month,
+                            fileName: file.name,
+                            subject,
+                            records: safeRecords,
+                            savedAt: new Date().toISOString()
+                        });
+
+                        savedRecords += records.length;
+                    }
+
+                    this.value = '';
+                    await refreshStoredData(false);
+                    $('centerFilter').value = center;
+                    $('monthFilter').value = month;
+                    render();
+
+                    setStatus(
+                        'Carga registrada correctamente: ' + files.length +
+                        ' archivo(s), ' + fmt(savedRecords) + ' registros, centro ' +
+                        center + ' y mes ' + formatMonth(month) + '.',
+                        'ok'
+                    );
+                } catch (e) {
+                    console.error(e);
+                    setStatus('Error al procesar los archivos: ' + e.message, 'error');
+                }
+            });
+
+            ['centerFilter', 'monthFilter', 'subjectFilter',
+                'eventFilter', 'componentFilter'].forEach(id =>
+                $(id).addEventListener('change', render)
+            );
+
+            $('periodFilter').addEventListener('change', applyQuickPeriod);
+
+            ['dateFrom', 'dateTo'].forEach(id =>
+                $(id).addEventListener('change', () => {
+                    $('periodFilter').value = 'custom';
+                    render();
+                })
+            );
+
+            $('resetBtn').addEventListener('click', () => {
+                $('centerFilter').value = '';
+                $('monthFilter').value = '';
+                $('subjectFilter').value = '';
+                $('eventFilter').value = '';
+                $('componentFilter').value = '';
+                $('periodFilter').value = 'all';
+                $('dateFrom').value = '';
+                $('dateTo').value = '';
+                render();
+            });
+
+            $('clearBtn').addEventListener('click', async () => {
+                const confirmed = window.confirm(
+                    '¿Deseas eliminar todos los datos guardados de los centros y meses en este navegador?'
+                );
+                if (!confirmed) return;
+
+                try {
+                    await clearDatasets();
+                    $('fileInput').value = '';
+                    $('loadCenter').value = '';
+                    $('loadMonth').value = '';
+                    rebuildFromDatasets([]);
+                    setStatus('Todos los datos guardados fueron eliminados.', 'ok');
+                } catch (e) {
+                    setStatus('No se pudieron eliminar los datos: ' + e.message, 'error');
+                }
+            });
+
+            $('pdfBtn').addEventListener('click', async () => {
+                if (!rawData.length) {
+                    setStatus('Primero debes cargar los archivos JSON.', 'error');
+                    return;
+                }
+                if (!window.html2canvas || !window.jspdf) {
+                    setStatus(
+                        'No fue posible cargar el generador PDF. Verifica la conexión a internet.',
+                        'error'
+                    );
+                    return;
+                }
+
+                const btn = $('pdfBtn');
+                btn.disabled = true;
+                btn.textContent = 'Generando PDF…';
+                document.documentElement.classList.add('pdf-mode');
+
+                const centerText = $('centerFilter').value || 'Todos los centros';
+                const monthText = $('monthFilter').value
+                    ? formatMonth($('monthFilter').value)
+                    : 'Todos los meses';
+
+                $('pdfMeta').textContent =
+                    'Informe generado el ' + new Date().toLocaleString('es-HN') +
+                    '. Centro: ' + centerText +
+                    '. Mes registrado: ' + monthText +
+                    '. Asignatura: ' + ($('subjectFilter').value || 'Todas') +
+                    '. Evento: ' + ($('eventFilter').value || 'Todos') +
+                    '. Componente: ' + ($('componentFilter').value || 'Todos') + '.';
+
+                try {
+                    await new Promise(r => setTimeout(r, 250));
+                    const canvas = await html2canvas($('reportArea'), {
+                        scale: 1.35,
+                        useCORS: true,
+                        backgroundColor: '#ffffff',
+                        windowWidth: 1500
+                    });
+
+                    const img = canvas.toDataURL('image/jpeg', 0.92);
+                    const { jsPDF } = window.jspdf;
+                    const pdf = new jsPDF('p', 'mm', 'a4');
+                    const pw = 210, ph = 297, margin = 7, usable = pw - margin * 2;
+                    const ih = canvas.height * usable / canvas.width;
+                    let remaining = ih, pos = margin;
+
+                    pdf.addImage(img, 'JPEG', margin, pos, usable, ih);
+                    remaining -= ph - margin * 2;
+
+                    while (remaining > 0) {
+                        pos = margin - (ih - remaining);
+                        pdf.addPage();
+                        pdf.addImage(img, 'JPEG', margin, pos, usable, ih);
+                        remaining -= ph - margin * 2;
+                    }
+
+                    const safeCenter = centerText.replace(/[^\wáéíóúñ-]+/gi, '_');
+                    const safeMonth = $('monthFilter').value || 'todos_los_meses';
+                    pdf.save('Informe_Telebasica_' + safeCenter + '_' + safeMonth + '.pdf');
+                    setStatus('El informe PDF se descargó correctamente.', 'ok');
+                } catch (e) {
+                    console.error(e);
+                    setStatus('No se pudo generar el PDF: ' + e.message, 'error');
+                } finally {
+                    document.documentElement.classList.remove('pdf-mode');
+                    btn.disabled = false;
+                    btn.textContent = 'Descargar informe PDF';
+                }
+            });
+
+            (async function init() {
+                try {
+                    await refreshStoredData(true);
+                    if (!rawData.length) {
+                        setStatus(
+                            'Selecciona el centro, el mes y carga los JSON. ' +
+                            'La información quedará guardada en este navegador.'
+                        );
+                    }
+                } catch (e) {
+                    console.error(e);
+                    setStatus(
+                        'No fue posible abrir el almacenamiento local del navegador: ' + e.message,
+                        'error'
+                    );
+                }
+            })();
         })();
     </script>
 </body>
